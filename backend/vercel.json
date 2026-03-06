@@ -11,19 +11,5 @@
       "src": "/(.*)",
       "dest": "main.py"
     }
-  ],
-  "env": {
-    "OPENROUTER_API_KEY": "@openrouter_api_key",
-    "MODEL_NAME": "anthropic/claude-3-haiku",
-    "EMBEDDING_MODEL": "sentence-transformers/all-MiniLM-L6-v2",
-    "HOST": "0.0.0.0",
-    "PORT": "8000",
-    "DEBUG": "false",
-    "CORS_ORIGINS": "*",
-    "VECTOR_STORE_PATH": "/tmp/vector_store",
-    "UPLOAD_DIR": "/tmp/uploads",
-    "MEMORY_K": "10",
-    "CHUNK_SIZE": "1000",
-    "CHUNK_OVERLAP": "200"
-  }
+  ]
 }
