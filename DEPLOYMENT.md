@@ -1,115 +1,88 @@
-# Deploying to Vercel
+# Deploying Nova
 
-Nova can be deployed to Vercel in two parts: backend and frontend.
+**Recommended Setup**: Backend on Railway + Frontend on Vercel
+
+Railway provides longer timeouts and persistent storage, making it ideal for the backend. Vercel is perfect for the static frontend.
 
 ## Prerequisites
 
+- Railway account ([sign up here](https://railway.app))
 - Vercel account ([sign up here](https://vercel.com/signup))
-- Vercel CLI: `npm install -g vercel`
-- OpenRouter API key
+- OpenRouter API key ([get one here](https://openrouter.ai/keys))
 
-## Option 1: Deploy via Vercel CLI
+## Step 1: Deploy Backend to Railway
 
-### 1. Deploy Backend
+### Via Railway Dashboard (Recommended)
+
+1. Go to [railway.app/new](https://railway.app/new)
+2. Click **"Deploy from GitHub repo"**
+3. Select your repository: `Raghahahav/ILikeITBlack`
+4. Click **"Add variables"** and configure:
+
+   ```env
+   OPENROUTER_API_KEY=sk-or-v1-your-key-here
+   MODEL_NAME=anthropic/claude-3-haiku
+   CORS_ORIGINS=*
+   PORT=8000
+   ```
+
+5. Under **Settings**:
+   - **Root Directory**: `backend`
+   - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+   - **Python Version**: Leave default (3.9+)
+
+6. Click **"Deploy"**
+7. Once deployed, go to **Settings** → **Networking** → **Generate Domain**
+8. Copy your backend URL (e.g., `https://nova-backend.railway.app`)
+
+### Via Railway CLI (Alternative)
 
 ```bash
 cd backend
-vercel --prod
+npm install -g @railway/cli
+railway login
+railway init
+railway up
+railway variables set OPENROUTER_API_KEY=your-key-here
+railway open
 ```
 
-When prompted:
+## Step 2: Deploy Frontend to Vercel
 
-- Set up and deploy? **Y**
-- Which scope? Select your account
-- Link to existing project? **N**
-- Project name? **nova-backend** (or your choice)
-- Directory? **./backend**
-- Override settings? **N**
+### Via Vercel Dashboard (Recommended)
 
-After deployment, note the backend URL (e.g., `https://nova-backend.vercel.app`)
+1. Go to [vercel.com/new](https://vercel.com/new)
+2. Import your repository: `Raghahahav/ILikeITBlack`
+3. Configure:
+   - **Project Name**: `nova` or `nova-frontend`
+   - **Framework Preset**: Vite
+   - **Root Directory**: `frontend`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
 
-### 2. Configure Backend Environment Variables
+4. Add Environment Variable:
 
-In Vercel dashboard → Project → Settings → Environment Variables, add:
+   ```
+   VITE_API_URL=https://your-railway-backend-url.railway.app
+   ```
 
-```
-OPENROUTER_API_KEY=sk-or-v1-your-key-here
-MODEL_NAME=anthropic/claude-3-haiku
-CORS_ORIGINS=*
-```
+5. Click **"Deploy"**
+6. Visit your live site!
 
-### 3. Deploy Frontend
-
-Update `.env.production` with your backend URL:
-
-```env
-VITE_API_URL=https://your-backend-url.vercel.app
-```
-
-Then deploy:
+### Via Vercel CLI (Alternative)
 
 ```bash
 cd frontend
 vercel --prod
 ```
 
-## Option 2: Deploy via GitHub (Recommended)
+## Why Railway for Backend?
 
-### 1. Connect to Vercel
-
-1. Go to [vercel.com/new](https://vercel.com/new)
-2. Import your GitHub repository
-3. Vercel will detect two deployable directories
-
-### 2. Deploy Backend
-
-- **Project Name**: `nova-backend`
-- **Framework Preset**: Other
-- **Root Directory**: `backend`
-- **Build Command**: Leave empty
-- **Output Directory**: Leave empty
-- **Environment Variables**:
-  - `OPENROUTER_API_KEY`: Your OpenRouter key
-  - `MODEL_NAME`: `anthropic/claude-3-haiku`
-  - `CORS_ORIGINS`: `*`
-
-Click **Deploy**
-
-### 3. Deploy Frontend
-
-Import the same repo again:
-
-- **Project Name**: `nova` or `nova-frontend`
-- **Framework Preset**: Vite
-- **Root Directory**: `frontend`
-- **Build Command**: `npm run build`
-- **Output Directory**: `dist`
-- **Environment Variables**:
-  - `VITE_API_URL`: Your backend URL from step 2
-
-Click **Deploy**
-
-## Important Notes
-
-⚠️ **Limitations**:
-
-- Vercel serverless functions have a 10-second execution limit (Hobby) / 60s (Pro)
-- File uploads are limited to 4.5MB (use external storage for production)
-- `/tmp` storage is ephemeral (uploaded documents won't persist between requests)
-
-💡 **For production RAG**:
-
-- Use a persistent vector database (Pinecone, Weaviate, Qdrant)
-- Store documents in S3/CloudFlare R2
-- Consider deploying backend to Railway/Render/Fly.io for long-running processes
-
-## Alternative: Single Vercel Deployment
-
-You can deploy just the frontend to Vercel and run the backend elsewhere:
-
-1. Deploy backend to: Railway, Render, Fly.io, or DigitalOcean
-2. Update `frontend/.env.production` with the backend URL
-3. Deploy frontend to Vercel
+✅ **No timeout limits** - Long LLM responses work perfectly
+✅ **Persistent storage** - File uploads and vector store persist
+✅ **Always-on** - True server, not serverless functions
+✅ **Better for RAG** - Real file system access
+✅ **Cost-effective** - $5/month for 500 hours execution time
 
 ## Post-Deployment
 
@@ -117,23 +90,58 @@ After deployment:
 
 1. Visit your frontend URL
 2. Open Settings (⚙️ icon)
-3. Enter your OpenRouter API key (if not set in backend)
+3. Enter your OpenRouter API key (if not set in Railway)
 4. Start chatting!
 
 ## Troubleshooting
 
-**Backend timeout errors**:
+**Railway deployment fails**:
 
-- Reduce `max_iterations` in `agent.py`
-- Use faster models (Claude Haiku, GPT-3.5)
-- Increase Vercel timeout (Pro plan)
+- Check logs in Railway dashboard
+- Verify `requirements.txt` is complete
+- Ensure Python 3.9+ is used
 
-**CORS errors**:
+**Frontend can't connect to backend**:
 
-- Set `CORS_ORIGINS=*` in backend environment variables
-- Or set specific frontend URL: `CORS_ORIGINS=https://your-frontend.vercel.app`
+- Check `VITE_API_URL` in Vercel environment variables
+- Verify Railway backend is running (check logs)
+- Ensure `CORS_ORIGINS=*` is set in Railway
 
 **Document uploads fail**:
 
-- Vercel serverless functions have size limits
+- Railway provides persistent storage by default
+- Check Railway logs for errors
+- Verify `UPLOAD_DIR` and `VECTOR_STORE_PATH` are writable
+
+**Slow responses**:
+
+- Use faster models (Claude Haiku, GPT-3.5)
+- Reduce `max_iterations` in `agent.py`
+- Check OpenRouter API status
+
+## Environment Variables Reference
+
+### Railway (Backend)
+
+| Variable             | Value                      | Required               |
+| -------------------- | -------------------------- | ---------------------- |
+| `OPENROUTER_API_KEY` | Your OpenRouter API key    | ✅ Yes                 |
+| `MODEL_NAME`         | `anthropic/claude-3-haiku` | No (has default)       |
+| `CORS_ORIGINS`       | `*`                        | No (but recommended)   |
+| `PORT`               | `8000`                     | No (Railway auto-sets) |
+
+### Vercel (Frontend)
+
+| Variable       | Value               | Required |
+| -------------- | ------------------- | -------- |
+| `VITE_API_URL` | Railway backend URL | ✅ Yes   |
+
+## Cost Estimates
+
+- **Railway**: $5/month (Hobby plan, 500 hours)
+- **Vercel**: Free (Hobby plan, sufficient for most use)
+- **OpenRouter**: Pay per token (varies by model)
+
+**Total**: ~$5-10/month for personal use
+
 - Use external storage (S3) or deploy backend elsewhere

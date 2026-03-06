@@ -1,0 +1,56 @@
+🚀 RAILWAY + VERCEL DEPLOYMENT
+
+═══════════════════════════════════════════════════════════════
+
+STEP 1: Deploy Backend to Railway
+═══════════════════════════════════════════════════════════════
+
+1. Go to: https://railway.app/new
+2. Click "Deploy from GitHub repo"
+3. Select: Raghahahav/ILikeITBlack
+4. Configure:
+   - Root Directory: backend
+   - Start Command: uvicorn main:app --host 0.0.0.0 --port $PORT
+
+5. Add Environment Variables:
+   OPENROUTER_API_KEY = sk-or-v1-your-key-here
+   MODEL_NAME = anthropic/claude-3-haiku
+   CORS_ORIGINS = *
+
+6. Deploy and generate domain:
+   Settings → Networking → Generate Domain
+   
+7. Copy URL: https://nova-backend.railway.app
+
+═══════════════════════════════════════════════════════════════
+
+STEP 2: Deploy Frontend to Vercel
+═══════════════════════════════════════════════════════════════
+
+1. Go to: https://vercel.com/new
+2. Import: github.com/Raghahahav/ILikeITBlack
+3. Configure:
+   - Project Name: nova-frontend
+   - Framework: Vite
+   - Root Directory: frontend
+   - Build Command: npm run build
+
+4. Add Environment Variable:
+   VITE_API_URL = [YOUR RAILWAY URL FROM STEP 1]
+
+5. Deploy and visit your site!
+
+═══════════════════════════════════════════════════════════════
+
+✅ WHY RAILWAY FOR BACKEND?
+═══════════════════════════════════════════════════════════════
+
+✓ No timeout limits (unlimited execution time)
+✓ Persistent storage (documents stay saved)
+✓ True server environment (not serverless)
+✓ Better for RAG pipeline
+✓ Only $5/month
+
+═══════════════════════════════════════════════════════════════
+
+Need help? See DEPLOYMENT.md for detailed instructions.
