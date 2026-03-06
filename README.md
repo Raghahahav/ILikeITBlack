@@ -1,8 +1,8 @@
-# Nova
+# ILikeITBlack
 
 Fast, minimal AI chatbot with RAG and web search. Built with FastAPI + React + Vite.
 
-![Nova](https://img.shields.io/badge/Nova-AI%20Chat-a78bfa?style=flat-square)
+![ILikeITBlack](https://img.shields.io/badge/Nova-AI%20Chat-a78bfa?style=flat-square)
 ![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=flat-square&logo=python&logoColor=white)
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
@@ -42,8 +42,8 @@ Fast, minimal AI chatbot with RAG and web search. Built with FastAPI + React + V
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/nova.git
-cd nova
+git clone https://github.com/YOUR_USERNAME/ILikeITBlack.git
+cd ILikeITBlack
 ```
 
 ### 2. Backend Setup
@@ -85,7 +85,7 @@ Frontend runs on `http://localhost:5173`
 ## Project Structure
 
 ```
-nova/
+ILikeITBlack/
 ├── backend/              # FastAPI backend
 │   ├── agent.py         # Dual-path agent (fast + agent modes)
 │   ├── tools.py         # Lazy-loaded tools (web search, RAG)
