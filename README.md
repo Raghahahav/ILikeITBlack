@@ -10,23 +10,27 @@ Fast, minimal AI chatbot with RAG and web search. Built with FastAPI + React + V
 ## Features
 
 ⚡ **Optimized Performance**
+
 - Dual-path agent (fast LLM streaming for simple queries, agent only when tools needed)
 - Lazy-loaded tools (web search and RAG)
 - Reduced token limits and iterations
 
 🎨 **Premium Design**
+
 - Minimal dark zinc palette with violet accents
 - Responsive layout (mobile, tablet, desktop)
 - Real-time streaming messages
 - Smooth animations
 
 📚 **RAG Pipeline**
+
 - Upload PDF and TXT documents
 - FAISS vector storage with HuggingFace embeddings
 - Document chunking with overlap
 - Context-aware responses
 
 🔍 **Web Search**
+
 - DuckDuckGo integration
 - Real-time information retrieval
 - Smart tool selection
@@ -104,14 +108,14 @@ ILikeITBlack/
 
 ## API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/health` | Server health check |
-| POST | `/chat` | Send message (streaming SSE) |
-| POST | `/documents/upload` | Upload PDF/TXT |
-| GET | `/documents` | List documents |
-| DELETE | `/documents/{id}` | Delete document |
-| DELETE | `/chat/session/{id}` | Clear session |
+| Method | Endpoint             | Description                  |
+| ------ | -------------------- | ---------------------------- |
+| GET    | `/health`            | Server health check          |
+| POST   | `/chat`              | Send message (streaming SSE) |
+| POST   | `/documents/upload`  | Upload PDF/TXT               |
+| GET    | `/documents`         | List documents               |
+| DELETE | `/documents/{id}`    | Delete document              |
+| DELETE | `/chat/session/{id}` | Clear session                |
 
 ## Configuration
 
@@ -126,12 +130,14 @@ EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
 ### Frontend
 
 Settings can be configured in the UI (⚙️ button):
+
 - OpenRouter API key (overrides backend default)
 - Model selection (Claude, GPT-4, Gemini, etc.)
 
 ## Tech Stack
 
 **Backend**
+
 - FastAPI - Async web framework
 - LangChain - LLM orchestration
 - OpenRouter - Multi-model LLM API
@@ -140,6 +146,7 @@ Settings can be configured in the UI (⚙️ button):
 - PyMuPDF - PDF parsing
 
 **Frontend**
+
 - React 18 - UI library
 - Vite - Build tool
 - Tailwind CSS - Styling
