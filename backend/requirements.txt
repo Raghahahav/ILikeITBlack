@@ -11,7 +11,7 @@ langchain-community==0.0.24
 langchain-huggingface==0.0.3
 
 # Vector store and embeddings
-faiss-cpu==1.7.4
+faiss-cpu==1.8.0
 sentence-transformers==2.6.0
 
 # Document processing

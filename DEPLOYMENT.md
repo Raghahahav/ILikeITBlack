@@ -10,6 +10,7 @@ Deploy Nova completely to Vercel (both backend and frontend).
 ## Step 1: Deploy Backend to Railway
 
 ### Via Railway Dashboard (Recommended)
+
 Vercel
 
 1. Go to [vercel.com/new](https://vercel.com/new)
@@ -22,6 +23,7 @@ Vercel
    - **Install Command**: `pip install -r requirements.txt`
 
 4. Add Environment Variables (click "Environment Variables"):
+
    ```
    OPENROUTER_API_KEY = sk-or-v1-your-key-here
    MODEL_NAME = anthropic/claude-3-haiku
@@ -30,6 +32,7 @@ Vercel
 
 5. Click **"Deploy"**
 6. Once deployed, copy your backend URL (e.g., `https://nova-backend-xxx.vercel.app`)
+
 ### Via Vercel Dashboard (Recommended)
 
 1. Go to [vercel.com/new](https://vercel.com/new)
