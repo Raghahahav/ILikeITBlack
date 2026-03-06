@@ -1,54 +1,35 @@
-# Deploying Nova
+# Deploying to Vercel
 
-**Recommended Setup**: Backend on Railway + Frontend on Vercel
-
-Railway provides longer timeouts and persistent storage, making it ideal for the backend. Vercel is perfect for the static frontend.
+Deploy Nova completely to Vercel (both backend and frontend).
 
 ## Prerequisites
 
-- Railway account ([sign up here](https://railway.app))
 - Vercel account ([sign up here](https://vercel.com/signup))
 - OpenRouter API key ([get one here](https://openrouter.ai/keys))
 
 ## Step 1: Deploy Backend to Railway
 
 ### Via Railway Dashboard (Recommended)
+Vercel
 
-1. Go to [railway.app/new](https://railway.app/new)
-2. Click **"Deploy from GitHub repo"**
-3. Select your repository: `Raghahahav/ILikeITBlack`
-4. Click **"Add variables"** and configure:
+1. Go to [vercel.com/new](https://vercel.com/new)
+2. Import your repository: `Raghahahav/ILikeITBlack`
+3. Configure:
+   - **Project Name**: `nova-backend`
+   - **Framework Preset**: Other
+   - **Root Directory**: `backend`
+   - **Build Command**: (leave empty)
+   - **Install Command**: `pip install -r requirements.txt`
 
-   ```env
-   OPENROUTER_API_KEY=sk-or-v1-your-key-here
-   MODEL_NAME=anthropic/claude-3-haiku
-   CORS_ORIGINS=*
-   PORT=8000
+4. Add Environment Variables (click "Environment Variables"):
+   ```
+   OPENROUTER_API_KEY = sk-or-v1-your-key-here
+   MODEL_NAME = anthropic/claude-3-haiku
+   CORS_ORIGINS = *
    ```
 
-5. Under **Settings**:
-   - **Root Directory**: `backend`
-   - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
-   - **Python Version**: Leave default (3.9+)
-
-6. Click **"Deploy"**
-7. Once deployed, go to **Settings** → **Networking** → **Generate Domain**
-8. Copy your backend URL (e.g., `https://nova-backend.railway.app`)
-
-### Via Railway CLI (Alternative)
-
-```bash
-cd backend
-npm install -g @railway/cli
-railway login
-railway init
-railway up
-railway variables set OPENROUTER_API_KEY=your-key-here
-railway open
-```
-
-## Step 2: Deploy Frontend to Vercel
-
+5. Click **"Deploy"**
+6. Once deployed, copy your backend URL (e.g., `https://nova-backend-xxx.vercel.app`)
 ### Via Vercel Dashboard (Recommended)
 
 1. Go to [vercel.com/new](https://vercel.com/new)
